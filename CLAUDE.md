@@ -11,6 +11,15 @@ npm run typecheck    # tsc --noEmit (type-check without emitting files)
 npm run lint         # eslint src
 ```
 
+## Before finishing any non-trivial code edits
+
+Run both checks and fix all errors/warnings before considering the task done:
+
+```bash
+npm run lint
+npm run typecheck
+```
+
 There are no automated tests. To run the extension manually, open the repo in VS Code and press **F5** — this launches an Extension Development Host with the extension loaded. Reload the host window (`Cmd+R`) to pick up new builds.
 
 ## Architecture
