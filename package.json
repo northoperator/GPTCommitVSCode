@@ -62,8 +62,8 @@
       "properties": {
         "gptcommit.appearance.delimeter": {
           "type": "string",
-          "default": "*",
-          "description": "Delimeter between commit lines"
+          "default": "",
+          "description": "Optional prefix added to each generated commit line"
         },
         "gptcommit.general.generator": {
           "type": "string",

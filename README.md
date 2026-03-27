@@ -1,6 +1,6 @@
 # GPT Commit
 
-VS Code extension which helps to generate AI commit messages using ChatGPT.
+VS Code extension which helps to generate AI commit messages using ChatGPT or Groq.
 
 ## Features
 
@@ -12,29 +12,36 @@ You can generate commit message by pressing 'Generate AI commit' button in sourc
 
 ## Requirements
 
-You need Open AI API Key to make this extension work.
-You can get your API key from [OpenAI](https://platform.openai.com/account/api-keys).
+An API key for your chosen generator (OpenAI or Groq).
+
+- OpenAI API key: [platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
+- Groq API key: [console.groq.com/keys](https://console.groq.com/keys)
 
 ## Extension Settings
 
-GPT Commit extension contributes the following settings:
-
 ### Appearance
 
-- `gptcommit.appearance.delimeter`: Delimeter between commit lines
+- `gptcommit.appearance.delimeter`: Optional prefix added to each generated commit line
 
 ### General
 
-- `gptcommit.general.generator`: Generator used to create commit messages. Available options: ChatGPT
-- `gptcommit.general.messageApproveMethod`: Method used to approve generated commit message. Available options: Quick pick, Message file
+- `gptcommit.general.generator`: Generator used to create commit messages. Available options: `ChatGPT`, `Groq` (default: `ChatGPT`)
+- `gptcommit.general.messageApproveMethod`: Method used to approve generated commit message. Available options: `Quick pick`, `Message file`
 
 ### OpenAI
 
-- `gptcommit.openAI.apiKey`: OpenAI API Key. Needed for generating AI commit messages
-- `gptcommit.openAI.gptVersion`: Version of GPT used by OpenAI
-- `gptcommit.openAI.customEndpoint`: Custom endpoint URL for OpenAI API
-- `gptcommit.openAI.temperature`: Controls randomness. Lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive
-- `gptcommit.openAI.maxTokens`: The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion
+- `gptcommit.openAI.apiKey`: OpenAI API key
+- `gptcommit.openAI.gptVersion`: GPT model version (default: `gpt-3.5-turbo-16k`)
+- `gptcommit.openAI.customEndpoint`: Custom endpoint URL for OpenAI-compatible APIs
+- `gptcommit.openAI.temperature`: Sampling temperature (default: `0.2`)
+- `gptcommit.openAI.maxTokens`: Maximum tokens to generate (default: `196`)
+
+### Groq
+
+- `gptcommit.groq.apiKey`: Groq API key
+- `gptcommit.groq.model`: Groq model (default: `openai/gpt-oss-120b`)
+- `gptcommit.groq.temperature`: Sampling temperature (default: `0.2`)
+- `gptcommit.groq.maxTokens`: Maximum tokens to generate (default: `196`)
 
 ## Release Notes
 
@@ -66,6 +73,10 @@ Added option to set custom ChatGPT endpoint URL. (Thanks for help [aiyogg](https
 Fixed issue with git on windows (Issue [#5](https://github.com/dmytrobaida/GPTCommitVSCode/issues/5))\
 Added option to select different ChatGPT version (Issue [#6](https://github.com/dmytrobaida/GPTCommitVSCode/issues/6))\
 Set default ChatGPT version to gpt-3.5-turbo-16k
+
+### 1.0.6
+
+Added Groq as a generator option (default model: `openai/gpt-oss-120b`)
 
 ## License
 

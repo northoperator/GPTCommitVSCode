@@ -5,10 +5,16 @@ export type ChatMessage = {
   content: string;
 };
 
-export const defaultTemperature = 0.2;
-export const defaultMaxTokens = 196;
+export const defaultTemperature = 0.3;
+export const defaultMaxTokens = 512;
 
-const systemPrompt = `You are to act as the author of a commit message in git. Your mission is to create clean and comprehensive commit messages in the conventional commit convention. I'll send you an output of 'git diff --staged' command, and you convert it into a commit message. Do not preface the commit with anything, use the present tense. Don't add any descriptions to the commit, only commit message. Use english language to answer.`;
+const systemPrompt = `You are the author of a git commit message. I will send you the output of 'git diff --staged', and you must convert it into a single conventional commit message in English.
+
+Return exactly one conventional-commit subject line on the first line.
+If extra context is useful, add a blank line followed by a short descriptive body of 1-3 lines.
+Use the imperative mood and present tense.
+Do not return multiple conventional-commit headlines.
+Do not use bullets, markdown, code fences, or any explanatory preface.`;
 
 const exampleUserMessage = `diff --git a/src/server.ts b/src/server.ts
     index ad4db42..f3b18a9 100644
@@ -33,8 +39,10 @@ const exampleUserMessage = `diff --git a/src/server.ts b/src/server.ts
     +  console.log(\`Server listening on port \${PORT}\`);
       });`;
 
-const exampleAssistantMessage = `fix(server.ts): change port variable case from lowercase port to uppercase PORT
-feat(server.ts): add support for process.env.PORT environment variable`;
+const exampleAssistantMessage = `feat(server): support PORT environment variable
+
+Rename the port constant to PORT for consistency.
+Allow process.env.PORT to override the default port when starting the server.`;
 
 export function buildCommitPromptMessages(diff: string): Array<ChatMessage> {
   return [
@@ -47,7 +55,7 @@ export function buildCommitPromptMessages(diff: string): Array<ChatMessage> {
 
 export function normalizeCommitMessage(
   commitMessage: string | null | undefined,
-  delimeter?: string
+  delimeter?: string,
 ) {
   if (!commitMessage) {
     throw new Error("No commit message were generated. Try again.");
