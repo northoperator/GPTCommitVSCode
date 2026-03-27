@@ -51,6 +51,7 @@ export type Configuration = z.infer<typeof configurationSchema>;
 
 export async function setConfigurationValue(
   key: DeepKey<Configuration>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any
 ) {
   const configuration = vscode.workspace.getConfiguration("gptcommit");

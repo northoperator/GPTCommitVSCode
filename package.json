@@ -146,19 +146,18 @@
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
     "build": "npm run esbuild-base -- --sourcemap",
     "watch": "npm run esbuild-base -- --sourcemap --watch",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint src",
     "package": "vsce package -o packages",
     "package:publish": "vsce publish"
   },
   "devDependencies": {
     "@types/node": "16.x",
     "@types/vscode": "^1.76.0",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
     "@vscode/test-electron": "^2.3.0",
     "esbuild": "^0.27.4",
-    "eslint": "^8.36.0",
-    "typescript": "^4.9.5"
+    "eslint": "^10.1.0",
+    "typescript": "^4.9.5",
+    "typescript-eslint": "^8.57.2"
   },
   "dependencies": {
     "execa": "^7.1.1",

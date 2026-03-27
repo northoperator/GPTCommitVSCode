@@ -176,7 +176,7 @@ export async function generateAiCommitCommand() {
         await generateCompletionFlow.run({ delimeter });
       }
     );
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof Error) {
       logToOutputChannel(`Error: ${error.message}`);
       vscode.window.showErrorMessage(error.message);

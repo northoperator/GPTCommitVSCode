@@ -27,7 +27,7 @@ const filesToExclude = [
  * @deprecated This class is deprecated. Use `VscodeGitDiffProvider` instead.
  */
 export class ExecaGitDiffProvider implements DiffProvider {
-  async getStagedDiff(excludeFiles?: string[]) {
+  async getStagedDiff(_excludeFiles?: string[]) {
     const diffCached = ["diff", "--cached"];
     const { stdout: diff } = await execa(
       "git",
