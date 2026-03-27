@@ -26,6 +26,7 @@ export class GroqMsgGenerator implements MsgGenerator {
       model: this.config?.model || defaultModel,
       messages: buildCommitPromptMessages(diff),
       temperature: this.config?.temperature || defaultTemperature,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       max_completion_tokens: this.config?.maxTokens || defaultMaxTokens,
     });
 

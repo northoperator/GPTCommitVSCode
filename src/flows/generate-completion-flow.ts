@@ -52,7 +52,7 @@ export class GenerateCompletionFlow
       throw new Error("User rejected commit message.");
     }
 
-    if (edited && editedMessage != null && editedMessage.trim() !== "") {
+    if (edited && editedMessage !== null && editedMessage !== undefined && editedMessage.trim() !== "") {
       await this.commitMessageWriter.write(editedMessage);
     } else {
       await this.commitMessageWriter.write(commitMessage);

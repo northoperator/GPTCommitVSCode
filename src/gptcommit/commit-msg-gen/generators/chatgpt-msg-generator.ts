@@ -35,6 +35,7 @@ export class ChatgptMsgGenerator implements MsgGenerator {
       model: this.config?.gptVersion || defaultModel,
       messages: buildCommitPromptMessages(diff),
       temperature: this.config?.temperature || defaultTemperature,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       max_tokens: this.config?.maxTokens || defaultMaxTokens,
     });
 

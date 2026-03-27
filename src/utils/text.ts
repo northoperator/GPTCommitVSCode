@@ -77,7 +77,7 @@ export function trimNewLines(str: string, delimeter?: string) {
 export function isValidApiKey() {
   const configuration = getConfiguration();
   return (
-    configuration.openAI.apiKey != null &&
+    configuration.openAI.apiKey !== null && configuration.openAI.apiKey !== undefined &&
     configuration.openAI.apiKey.trim().length > 0
   );
 }
@@ -85,7 +85,7 @@ export function isValidApiKey() {
 export function isValidGroqApiKey() {
   const configuration = getConfiguration();
   return (
-    configuration.groq.apiKey != null &&
+    configuration.groq.apiKey !== null && configuration.groq.apiKey !== undefined &&
     configuration.groq.apiKey.trim().length > 0
   );
 }
