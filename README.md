@@ -26,7 +26,7 @@ An API key for your chosen generator (OpenAI or Groq).
 ### General
 
 - `gptcommit.general.generator`: Generator used to create commit messages. Available options: `ChatGPT`, `Groq` (default: `ChatGPT`)
-- `gptcommit.general.messageApproveMethod`: Method used to approve generated commit message. Available options: `Quick pick`, `Message file`
+- `gptcommit.general.messageApproveMethod`: How generated commit messages are handled. `Quick pick` inserts directly into the SCM input box, while `Message file` opens a temp file for review and editing.
 
 ### OpenAI
 

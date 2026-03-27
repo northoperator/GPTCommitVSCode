@@ -81,7 +81,7 @@
             "Message file"
           ],
           "default": "Quick pick",
-          "description": "Method used to approve generated commit messages"
+          "description": "How generated commit messages are handled. `Quick pick` inserts directly into the SCM input box, while `Message file` opens a temp file for review and editing."
         },
         "gptcommit.openAI.apiKey": {
           "type": "string",

@@ -129,15 +129,8 @@ export async function generateAiCommitCommand() {
       async (message) => {
         switch (configuration.general.messageApproveMethod) {
           case "Quick pick":
-            const quickPickResult = await vscode.window.showQuickPick(
-              ["Yes", "No"],
-              {
-                title: `Use this commit message?: ${message}`,
-              }
-            );
-
             return {
-              result: quickPickResult === "Yes",
+              result: true,
               edited: false,
             };
           case "Message file":
