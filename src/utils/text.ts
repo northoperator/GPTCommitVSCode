@@ -22,3 +22,11 @@ export function isValidApiKey() {
     configuration.openAI.apiKey.trim().length > 0
   );
 }
+
+export function isValidGroqApiKey() {
+  const configuration = getConfiguration();
+  return (
+    configuration.groq.apiKey != null &&
+    configuration.groq.apiKey.trim().length > 0
+  );
+}

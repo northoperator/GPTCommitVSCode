@@ -9,7 +9,7 @@ const configurationSchema = z.object({
   }),
   general: z.object({
     generator: z
-      .enum(["ChatGPT"])
+      .enum(["ChatGPT", "Groq"])
       .default("ChatGPT")
       .catch("ChatGPT")
       .optional(),
@@ -36,6 +36,12 @@ const configurationSchema = z.object({
       .catch("gpt-3.5-turbo-16k")
       .optional(),
     customEndpoint: z.string().optional(),
+    temperature: z.number().optional(),
+    maxTokens: z.number().optional(),
+  }),
+  groq: z.object({
+    apiKey: z.string().optional(),
+    model: z.string().default("openai/gpt-oss-120b").catch("openai/gpt-oss-120b").optional(),
     temperature: z.number().optional(),
     maxTokens: z.number().optional(),
   }),

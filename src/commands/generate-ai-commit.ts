@@ -7,10 +7,10 @@ import { getConfiguration } from "@utils/configuration";
 import { GitExtension } from "@gptcommit/scm/types";
 import { GitCommitMessageWriter, VscodeGitDiffProvider } from "@gptcommit/scm";
 import { GenerateCompletionFlow } from "@flows";
-import { ChatgptMsgGenerator } from "@gptcommit/commit-msg-gen";
+import { ChatgptMsgGenerator, GroqMsgGenerator } from "@gptcommit/commit-msg-gen";
 import { runTaskWithTimeout } from "@utils/timer";
 import { logToOutputChannel } from "@utils/output";
-import { isValidApiKey } from "@utils/text";
+import { isValidApiKey, isValidGroqApiKey } from "@utils/text";
 
 async function openTempFileWithMessage(message: string) {
   const uid = randomUUID();
@@ -92,18 +92,34 @@ export async function generateAiCommitCommand() {
       await gitExtension.activate();
     }
 
-    if (!isValidApiKey()) {
-      logToOutputChannel("OpenAI API Key is not set. Asking user to set it.");
-      await vscode.commands.executeCommand("gptcommit.setOpenAIApiKey");
-    }
-
-    if (!isValidApiKey()) {
-      throw new Error("You should set OpenAi API Key before using extension!");
-    }
-
     const configuration = getConfiguration();
+    const generator = configuration.general.generator ?? "ChatGPT";
+
+    if (generator === "Groq") {
+      if (!isValidGroqApiKey()) {
+        logToOutputChannel("Groq API Key is not set. Asking user to set it.");
+        await vscode.commands.executeCommand("gptcommit.setGroqApiKey");
+      }
+
+      if (!isValidGroqApiKey()) {
+        throw new Error("You should set a Groq API Key before using the Groq generator!");
+      }
+    } else {
+      if (!isValidApiKey()) {
+        logToOutputChannel("OpenAI API Key is not set. Asking user to set it.");
+        await vscode.commands.executeCommand("gptcommit.setOpenAIApiKey");
+      }
+
+      if (!isValidApiKey()) {
+        throw new Error("You should set OpenAi API Key before using extension!");
+      }
+    }
+
     const commitMessageWriter = new GitCommitMessageWriter(gitExtension);
-    const messageGenerator = new ChatgptMsgGenerator(configuration.openAI);
+    const messageGenerator =
+      generator === "Groq"
+        ? new GroqMsgGenerator(configuration.groq)
+        : new ChatgptMsgGenerator(configuration.openAI);
     const diffProvider = new VscodeGitDiffProvider(gitExtension);
 
     const generateCompletionFlow = new GenerateCompletionFlow(
