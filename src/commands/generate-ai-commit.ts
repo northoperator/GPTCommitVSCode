@@ -23,7 +23,7 @@ async function openTempFileWithMessage(message: string) {
 
   await vscode.workspace.fs.writeFile(
     vscode.Uri.file(tempMessageFile),
-    Buffer.from(tempFileContent, "utf8")
+    new Uint8Array(Buffer.from(tempFileContent, "utf8"))
   );
 
   const document = await vscode.workspace.openTextDocument(tempMessageFile);
