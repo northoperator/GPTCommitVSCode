@@ -177,16 +177,6 @@ export async function generateAiCommitCommand() {
       }
     );
   } catch (error: any) {
-    if (error.isAxiosError && error.response?.data?.error?.message) {
-      logToOutputChannel(
-        `OpenAI API error: ${error.response.data.error.message}`
-      );
-      vscode.window.showErrorMessage(
-        `OpenAI API error: ${error.response.data.error.message}`
-      );
-      return;
-    }
-
     if (error instanceof Error) {
       logToOutputChannel(`Error: ${error.message}`);
       vscode.window.showErrorMessage(error.message);
