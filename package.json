@@ -90,7 +90,7 @@
         },
         "gptcommit.maxTokens": {
           "type": "number",
-          "default": 196,
+          "default": 1024,
           "description": "The maximum number of tokens to generate for all generators."
         },
         "gptcommit.openAI.apiKey": {

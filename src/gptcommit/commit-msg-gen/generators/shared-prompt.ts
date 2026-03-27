@@ -6,7 +6,7 @@ export type ChatMessage = {
 };
 
 export const defaultTemperature = 0.3;
-export const defaultMaxTokens = 512;
+export const defaultMaxTokens = 1024;
 
 const systemPrompt = `You are the author of a git commit message. I will send you the output of 'git diff --staged', and you must convert it into a single conventional commit message in English.
 
