@@ -148,7 +148,7 @@
     "watch": "npm run esbuild-base -- --sourcemap --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
-    "package": "vsce package -o packages",
+    "package": "mkdir -p packages && vsce package -o packages/",
     "package:publish": "vsce publish"
   },
   "devDependencies": {
