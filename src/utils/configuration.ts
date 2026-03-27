@@ -19,6 +19,8 @@ const configurationSchema = z.object({
       .catch("Quick pick")
       .optional(),
   }),
+  temperature: z.number().optional(),
+  maxTokens: z.number().optional(),
   openAI: z.object({
     apiKey: z.string().optional(),
     gptVersion: z
@@ -36,18 +38,18 @@ const configurationSchema = z.object({
       .catch("gpt-3.5-turbo-16k")
       .optional(),
     customEndpoint: z.string().optional(),
-    temperature: z.number().optional(),
-    maxTokens: z.number().optional(),
   }),
   groq: z.object({
     apiKey: z.string().optional(),
     model: z.string().default("openai/gpt-oss-120b").catch("openai/gpt-oss-120b").optional(),
-    temperature: z.number().optional(),
-    maxTokens: z.number().optional(),
   }),
 });
 
 export type Configuration = z.infer<typeof configurationSchema>;
+export type SharedGenerationConfiguration = Pick<
+  Configuration,
+  "temperature" | "maxTokens"
+>;
 
 export async function setConfigurationValue(
   key: DeepKey<Configuration>,
@@ -60,5 +62,19 @@ export async function setConfigurationValue(
 
 export function getConfiguration() {
   const configuration = vscode.workspace.getConfiguration("gptcommit");
-  return configurationSchema.parse(configuration);
+
+  const openAIConfiguration = configuration.get<Configuration["openAI"]>(
+    "openAI",
+    {}
+  );
+  const groqConfiguration = configuration.get<Configuration["groq"]>("groq", {});
+
+  return configurationSchema.parse({
+    appearance: configuration.get<Configuration["appearance"]>("appearance", {}),
+    general: configuration.get<Configuration["general"]>("general", {}),
+    temperature: configuration.get<number>("temperature"),
+    maxTokens: configuration.get<number>("maxTokens"),
+    openAI: openAIConfiguration,
+    groq: groqConfiguration,
+  });
 }

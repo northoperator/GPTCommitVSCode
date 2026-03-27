@@ -83,6 +83,16 @@
           "default": "Quick pick",
           "description": "How generated commit messages are handled. `Quick pick` inserts directly into the SCM input box, while `Message file` opens a temp file for review and editing."
         },
+        "gptcommit.temperature": {
+          "type": "number",
+          "default": 0.2,
+          "description": "Controls randomness for all generators. Lowering results in less random completions. As the temperature approaches zero, the model becomes more deterministic."
+        },
+        "gptcommit.maxTokens": {
+          "type": "number",
+          "default": 196,
+          "description": "The maximum number of tokens to generate for all generators."
+        },
         "gptcommit.openAI.apiKey": {
           "type": "string",
           "default": "",
@@ -108,16 +118,6 @@
           "default": "",
           "description": "Custom endpoint URL for OpenAI API"
         },
-        "gptcommit.openAI.temperature": {
-          "type": "number",
-          "default": 0.2,
-          "description": "Controls randomness. Lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive"
-        },
-        "gptcommit.openAI.maxTokens": {
-          "type": "number",
-          "default": 196,
-          "description": "The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion"
-        },
         "gptcommit.groq.apiKey": {
           "type": "string",
           "default": "",
@@ -127,16 +127,6 @@
           "type": "string",
           "default": "openai/gpt-oss-120b",
           "description": "Groq model to use for generating commit messages"
-        },
-        "gptcommit.groq.temperature": {
-          "type": "number",
-          "default": 0.2,
-          "description": "Controls randomness. Lowering results in less random completions"
-        },
-        "gptcommit.groq.maxTokens": {
-          "type": "number",
-          "default": 196,
-          "description": "The maximum number of tokens to generate"
         }
       }
     }

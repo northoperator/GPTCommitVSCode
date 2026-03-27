@@ -6,7 +6,10 @@
 
 import OpenAI from "openai";
 
-import { Configuration as AppConfiguration } from "@utils/configuration";
+import {
+  Configuration as AppConfiguration,
+  SharedGenerationConfiguration,
+} from "@utils/configuration";
 
 import { MsgGenerator } from "./msg-generator";
 import {
@@ -21,22 +24,27 @@ const defaultModel = "gpt-3.5-turbo-16k";
 export class ChatgptMsgGenerator implements MsgGenerator {
   openAI: OpenAI;
   config?: AppConfiguration["openAI"];
+  sharedConfig?: SharedGenerationConfiguration;
 
-  constructor(config: AppConfiguration["openAI"]) {
+  constructor(
+    config: AppConfiguration["openAI"],
+    sharedConfig?: SharedGenerationConfiguration
+  ) {
     this.openAI = new OpenAI({
       apiKey: config.apiKey,
       baseURL: config.customEndpoint?.trim() || undefined,
     });
     this.config = config;
+    this.sharedConfig = sharedConfig;
   }
 
   async generate(diff: string, delimeter?: string) {
     const completion = await this.openAI.chat.completions.create({
       model: this.config?.gptVersion || defaultModel,
       messages: buildCommitPromptMessages(diff),
-      temperature: this.config?.temperature || defaultTemperature,
+      temperature: this.sharedConfig?.temperature ?? defaultTemperature,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      max_tokens: this.config?.maxTokens || defaultMaxTokens,
+      max_tokens: this.sharedConfig?.maxTokens ?? defaultMaxTokens,
     });
 
     return normalizeCommitMessage(

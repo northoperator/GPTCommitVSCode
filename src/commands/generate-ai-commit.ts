@@ -116,10 +116,17 @@ export async function generateAiCommitCommand() {
     }
 
     const commitMessageWriter = new GitCommitMessageWriter(gitExtension);
+    const sharedGenerationConfiguration = {
+      temperature: configuration.temperature,
+      maxTokens: configuration.maxTokens,
+    };
     const messageGenerator =
       generator === "Groq"
-        ? new GroqMsgGenerator(configuration.groq)
-        : new ChatgptMsgGenerator(configuration.openAI);
+        ? new GroqMsgGenerator(configuration.groq, sharedGenerationConfiguration)
+        : new ChatgptMsgGenerator(
+            configuration.openAI,
+            sharedGenerationConfiguration
+          );
     const diffProvider = new VscodeGitDiffProvider(gitExtension);
 
     const generateCompletionFlow = new GenerateCompletionFlow(
